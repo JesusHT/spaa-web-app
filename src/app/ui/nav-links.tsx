@@ -1,22 +1,10 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { useAuthentication } from '../hooks/useAuthentication';
 
 export default function NavLinks() {
   const pathname = usePathname();
-  const isAuthenticate = useAuthentication();
-  const router = useRouter();
-
-  if (isAuthenticate === null) {
-    return <div>Cargando...</div>;
-  }
-
-  if (!isAuthenticate) {
-    router.push("/");
-    return null;
-  }
 
   return (
     <nav>

@@ -3,12 +3,15 @@ import type { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
     const URL_API_USER = "http://localhost:4000/protected-route";
+    const cookies = req.cookies.get('token');
+    const token   = cookies?.value;
 
     try {
         const externalApiResponse = await fetch(URL_API_USER, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             credentials: 'include',
         });

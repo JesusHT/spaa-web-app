@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { authenticateUser } from '../utils/auth';
 
 export const useAuthentication = () => {
-  const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
+  const [isAuthenticate, setIsAuthenticate] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkAuthentication = async () => {
