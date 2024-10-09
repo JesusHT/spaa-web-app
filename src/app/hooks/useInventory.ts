@@ -31,6 +31,14 @@ const useDashboard = () => {
         fetchInventoryData();
     }, []);
 
+    const handlePageChange = (direction: 'next' | 'prev') => {
+        if (direction === 'next' && currentPage < totalPages) {
+          setCurrentPage(prevPage => prevPage + 1);
+        } else if (direction === 'prev' && currentPage > 1) {
+          setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
     const handleView = (id: number) => {
         alert(`View details for item ${id}`);
     };
@@ -59,12 +67,13 @@ const useDashboard = () => {
     const totalPages = Math.ceil(filteredInventoryData.length / itemsPerPage);
 
     return {
-        loading, // Añadir el estado de carga
+        loading,
         error,
         paginatedInventoryData,
         handleView,
         handleEdit,
         handleDelete,
+        handlePageChange,
         currentPage,
         setCurrentPage,
         totalPages,

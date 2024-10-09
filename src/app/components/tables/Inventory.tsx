@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import ViewButton from '../buttons/ViewButton';
+import UpdateButton from '../buttons/UpdateButton';
+import DeleteButton from '../buttons/DeleteButton';
+import Modal from '../modal/modal';
 
 type InventoryTableProps = {
-    inventoryData: InventoryItem[];
-    onView: (id: number) => void;
-    onEdit: (id: number) => void;
-    onDelete: (id: number) => void;
-  };
-  
+  inventoryData: InventoryItem[];
+  onView: (id: number) => void;
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+};
 
 const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, onEdit, onDelete }) => {
-    if (!inventoryData) return null;
-  
-    return (
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
+
+  const handleDeleteClick = (id: number) => {
+    setSelectedItem(id);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmDelete = (id: number) => {
+    onDelete(id);
+    setIsModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  if (!inventoryData) return null;
+
+  return (
+    <div>
       <table className="min-w-full bg-white border mt-5 text-black border-gray-200 rounded-lg shadow-md">
         <thead>
           <tr className="bg-gray-100 border-b">
@@ -30,30 +52,24 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
               <td className="py-3 px-6">{item.quantity}</td>
               <td className="py-3 px-6">{item.description}</td>
               <td className="py-3 px-6 flex space-x-2">
-                <button
-                  onClick={() => onView(item.id_inventory)}
-                  className="text-blue-500 hover:text-blue-700"
-                >
-                  Ver
-                </button>
-                <button
-                  onClick={() => onEdit(item.id_inventory)}
-                  className="text-yellow-500 hover:text-yellow-700"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => onDelete(item.id_inventory)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  Eliminar
-                </button>
+                <ViewButton onClick={() => onView(item.id_inventory)} />
+                <UpdateButton onClick={() => onEdit(item.id_inventory)} />
+                <DeleteButton onClick={() => handleDeleteClick(item.id_inventory)} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    );
-  };
-  
-  export default InventoryTable;
+
+      <Modal
+        id_item={selectedItem ?? 0}
+        type="inventory item"
+        onConfirm={handleConfirmDelete}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
+    </div>
+  );
+};
+
+export default InventoryTable;

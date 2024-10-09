@@ -39,7 +39,7 @@ const useInventoryInsertForm = (id_module: number) => {
             id_brand: idBrand === '0' ? 0 : idBrand,
             id_model: idModel === '0' ? 0 : idModel,
             brand_name: idBrand === '0' ? brandName : undefined, 
-            name_model: idModel === '0' ? modelName : undefined,
+            model_name: idModel === '0' ? modelName : undefined,
             id_module,
             name,
             quantity,

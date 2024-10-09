@@ -3,24 +3,27 @@ import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
     const {
-        idBrand,
-        idModel,
+        id_brand,
+        id_model,
         name,
         quantity,
         folio,
         description,
         serie,
-        imageUrl,
+        image_url,
         status,
-        notLocated,
-        secondCustodian,  
-        id_module          
+        not_located,
+        second_custodian,  
+        id_module,
+        model_name,
+        brand_name          
     } = await req.json();
 
     const URL_API_INVENTARIO = "http://localhost:4000/api/inventario/";
 
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
+    console.log(model_name)
 
     if (!token) {
         return NextResponse.json({ error: 'No token provided' }, { status: 401 });
@@ -34,18 +37,20 @@ export async function POST(req: NextRequest) {
                 'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({
-                id_brand: idBrand,
-                id_model: idModel,
+                id_brand,
+                id_model,
                 name,
                 quantity,
                 folio,
                 description,
                 serie,
-                image_url: imageUrl,
+                image_url,
                 status,
-                not_located: notLocated,          
-                second_custodian: secondCustodian,
-                id_module                
+                not_located,          
+                second_custodian,
+                id_module,
+                model_name, 
+                brand_name       
             }),
             credentials: 'include',
         });
