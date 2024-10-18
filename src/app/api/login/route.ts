@@ -21,8 +21,9 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: errorData.body }, { status: externalApiResponse.status });
         }
 
-        const data = await externalApiResponse.json();
-        const token = data.body;
+        const res = await externalApiResponse.json();
+        const data = res.body
+        const token = data.token;
 
         const serializedCookie = serialize('token', token, {
             httpOnly: true,
