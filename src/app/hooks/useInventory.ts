@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const useDashboard = () => {
-    const [loading, setLoading] = useState<boolean>(true); // Estado de carga
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [inventoryData, setInventoryData] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>(''); 

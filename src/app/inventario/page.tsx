@@ -70,13 +70,14 @@ const Inventory = () => {
         <>
           <h1 className="text-2xl font-bold mb-4">Inventario</h1>
 
-          <SearchForm
-            placeholderText="Buscar por ID, nombre o descripción..."
-            searchTerm={searchTerm}  
-            setSearchTerm={setSearchTerm}
-          />
-
-          <AddButton onClick={openFormAdd} />
+          <div className="flex items-center space-x-4">
+            <SearchForm
+              placeholderText="Buscar por ID, nombre o descripción..."
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
+            <AddButton onClick={openFormAdd} />
+          </div>
 
           {loading ? (
             <p>Cargando datos de inventario...</p> 

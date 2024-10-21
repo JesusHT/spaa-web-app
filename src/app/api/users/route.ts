@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
-    const URL_API_INVENTORY = "http://localhost:4000/api/inventario";
+    const URL_API_INVENTORY = "http://localhost:4000/api/usuarios";
     const cookies = req.cookies.get('token');
     const token   = cookies?.value;
 
