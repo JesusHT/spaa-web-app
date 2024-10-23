@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import ViewButton from '../buttons/ViewButton';
-import UpdateButton from '../buttons/UpdateButton';
-import DeleteButton from '../buttons/DeleteButton';
-import Modal from '../modal/modal';
+import ViewButton from '@/app/components/buttons/ViewButton';
+import UpdateButton from '@/app/components/buttons/UpdateButton';
+import DeleteButton from '@/app/components/buttons/DeleteButton';
+import Modal from '@/app/components/modal/modal';
+import { InventoryItem } from '@/app/models/InventoryItem';
 
 type InventoryTableProps = {
   inventoryData: InventoryItem[];

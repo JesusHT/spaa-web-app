@@ -4,9 +4,11 @@ import ViewButton from '../buttons/ViewButton';
 import UpdateButton from '../buttons/UpdateButton';
 import DeleteButton from '../buttons/DeleteButton';
 import Modal from '../modal/modal';
+import { User } from '@/app/models/UserModel';
+
 
 type UsersTableProps = {
-  usersData: UsersItem[];
+  usersData: User[];
   onView: (id: number) => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;

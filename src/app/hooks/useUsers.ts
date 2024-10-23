@@ -1,24 +1,7 @@
 import { useState, useEffect } from 'react';
 
-interface Auth {
-    id_auth: number;
-    worker_number: number;
-    password: string;
-    id_role: number;
-}
-
-interface User {
-    id_user: number;
-    name: string;
-    description: string;
-    id_module: number;
-    id_role: number;
-}
-
-interface ProfileData {
-    auth: Auth;
-    user: User;
-}
+import { Profile } from '@/app/models/ProfileModel';
+import { User } from '@/app/models/UserModel';
 
 const useUsers = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -28,7 +11,7 @@ const useUsers = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
 
-    const [currentUser, setCurrentUser] = useState<ProfileData | null>(null);
+    const [currentUser, setCurrentUser] = useState<Profile | null>(null);
 
     useEffect(() => {
         const fetchUsersData = async () => {
@@ -47,7 +30,7 @@ const useUsers = () => {
                     throw new Error(errorData.error || 'Error al obtener el perfil del usuario');
                 }
 
-                const profileData: ProfileData = await profileResponse.json();
+                const profileData: Profile = await profileResponse.json();
                 setCurrentUser(profileData);
 
                 const usersResponse = await fetch('/api/users', {
@@ -71,7 +54,7 @@ const useUsers = () => {
                 }
 
                 const filteredUsers = users.filter(user => {
-                    const sameModule = user.id_module === profileData.user.id_module;
+                    const sameModule = user.id_modules === profileData.user.id_modules;
                     const hasPermission = user.id_role >= profileData.user.id_role;
                     return sameModule && hasPermission;
                 });
@@ -109,7 +92,7 @@ const useUsers = () => {
     };
 
     const filteredUsersData = usersData.filter(user => 
-        (user.id_user && user.id_user.toString().includes(searchTerm)) || 
+        (user.id_users && user.id_users.toString().includes(searchTerm)) || 
         (user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 

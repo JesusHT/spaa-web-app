@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const useLogout = () => {
-    const [error, setError] = useState<string>('');
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,12 +19,9 @@ const useLogout = () => {
 
             if (response.ok) {
                 router.push('/');
-            } else {
-                const data = await response.json();
-                setError(data.error || 'Ocurrió un error');
-            }
+            } 
         } catch (err) {
-            setError('Ocurrió un error');
+          console.error(err)
         }
     };
     

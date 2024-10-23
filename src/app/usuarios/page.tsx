@@ -1,17 +1,19 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAuthentication } from '../hooks/useAuthentication';
 import { useRouter } from 'next/navigation';
 
-import EmptyState from '../components/emptyState/table';
-import useUsers from '../hooks/useUsers';
-import Menu from '../ui/nav-links';
-import UsersTable from '../components/tables/users'; 
-import AddButton from '../components/buttons/AddButton';
-import RightArrowButton from '../components/buttons/RightArrowButton';
-import LeftArrowButton from '../components/buttons/LeftArrowButton';
-import SearchForm from '../components/input/search';
+import { useAuthentication } from '@/app/hooks/useAuthentication';
+import useUsers from '@/app/hooks/useUsers';
+
+import Menu from '@/app/ui/nav-links';
+
+import EmptyState from '@/app/components/emptyState/table';
+import UsersTable from '@/app/components/tables/users'; 
+import AddButton from '@/app/components/buttons/AddButton';
+import RightArrowButton from '@/app/components/buttons/RightArrowButton';
+import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
+import SearchForm from '@/app/components/inputs/search';
 
 const Users = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);

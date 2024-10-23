@@ -2,9 +2,9 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import useMenu from '../hooks/useMenu';
-import useLogout from '../hooks/useLogout';
-import SkeletonMenu from '../components/skeletons/skeletonMenu';
+import useMenu from '@/app/hooks/useMenu';
+import useLogout from '@/app/hooks/useLogout';
+import SkeletonMenu from '@/app/components/skeletons/skeletonMenu';
 
 export default function NavLinks() {
   const pathname = usePathname();

@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose
   return (
     <div
       id="popup-modal"
-      tabIndex="-1"
+      tabIndex={-1}
       className={`fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50 ${
         isOpen ? '' : 'hidden'
       }`}

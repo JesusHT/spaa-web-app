@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const useDashboard = () => {
+    const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [inventoryData, setInventoryData] = useState<any[]>([]);
@@ -39,12 +41,13 @@ const useDashboard = () => {
         }
     };
 
-    const handleView = (id: number) => {
+    const handleView = async (id: number) => {
         alert(`View details for item ${id}`);
     };
 
-    const handleEdit = (id: number) => {
-        alert(`Edit item ${id}`);
+    const handleEdit = async (id: number) => {
+        
+        router.push(`/inventario/editar/${id}`);
     };
 
     const handleDelete = (id: number) => {

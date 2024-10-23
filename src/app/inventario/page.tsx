@@ -1,22 +1,19 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { useAuthentication } from '../hooks/useAuthentication';
 import { useRouter } from 'next/navigation';
 
-import EmptyState from '../components/emptyState/table';
-import useInventory from '../hooks/useInventory';
+import EmptyState from '@/app/components/emptyState/table';
+import useInventory from '@/app/hooks/useInventory';
 
-import Menu from '../ui/nav-links';
-import InventoryTable from '../components/tables/Inventory';
-import AddButton from '../components/buttons/AddButton';
-import RightArrowButton from '../components/buttons/RightArrowButton';
-import LeftArrowButton from '../components/buttons/LeftArrowButton';
-import SearchForm from '../components/input/search';
+import InventoryTable from '@/app/components/tables/Inventory';
+import AddButton from '@/app/components/buttons/AddButton';
+import RightArrowButton from '@/app/components/buttons/RightArrowButton';
+import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
+import SearchForm from '@/app/components/inputs/search';
 
 const Inventory = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const isAuthenticated = useAuthentication();
   const router = useRouter();
 
   const {
@@ -46,18 +43,7 @@ const Inventory = () => {
     router.push('/inventario/agregar');
   };
 
-  if (isAuthenticated === null) {
-    return <h1>Cargando...</h1>;
-  }
-
-  if (!isAuthenticated) {
-    router.push('/');
-    return null;
-  }
-
   return (
-    <div className="flex">
-      <Menu /> 
       <div className="flex-grow p-6">
         {error && <p>Error: {error}</p>}
 
@@ -112,7 +98,6 @@ const Inventory = () => {
           )}
         </>
       </div>
-    </div>
   );
 };
 

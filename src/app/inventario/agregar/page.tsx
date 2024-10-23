@@ -1,32 +1,28 @@
 'use client';
 
 import React from 'react';
-import Menu from '../../ui/nav-links';
-import FormInsert from '../../components/forms/inventory';
-
-import { useAuthentication } from '../../hooks/useAuthentication';
 import { useRouter } from 'next/navigation';
 
-const Inventory = () => {
-  const isAuthenticated = useAuthentication();
+import FormInsert from '@/app/components/forms/inventory';
+import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
+
+const InventoryInsert = () => {
   const router = useRouter();
   const idModule = 2;
 
-  if (isAuthenticated === null) {
-    return <h1>Cargando...</h1>;
-  }
-
-  if (!isAuthenticated) {
-    router.push('/');
-    return null;
+  function backPage(){
+    router.push('/inventario');
   }
 
   return (
-    <div className="flex">
-      <Menu /> 
+    <>
+      <div className="flex-grow p-6">
+        <h1 className="text-2xl font-bold mb-4 p-2"><LeftArrowButton onClick={() => backPage()}/> Gestión de Inventario - Agregar</h1>
+
         <FormInsert idModule={idModule}/>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default Inventory;
+export default InventoryInsert;
