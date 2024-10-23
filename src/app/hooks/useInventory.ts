@@ -42,7 +42,8 @@ const useDashboard = () => {
     };
 
     const handleView = async (id: number) => {
-        alert(`View details for item ${id}`);
+        router.push(`/inventario/ver/${id}`);
+
     };
 
     const handleEdit = async (id: number) => {

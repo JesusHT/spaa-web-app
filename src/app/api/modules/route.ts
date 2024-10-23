@@ -2,12 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
-    const URL_API_MODELS = "http://localhost:4000/api/modelos";
+    const URL_API_MODULES = "http://localhost:4000/api/laboratorios";
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
 
     try {
-        const modelResponse = await fetch(URL_API_MODELS, {
+        const modulesResponse = await fetch(URL_API_MODULES, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,14 +16,14 @@ export async function GET(req: NextRequest) {
             credentials: 'include',
         });
 
-        if (!modelResponse.ok) {
-            const errorData = await modelResponse.json();
-            return NextResponse.json({ error: errorData.body }, { status: modelResponse.status });
+        if (!modulesResponse.ok) {
+            const errorData = await modulesResponse.json();
+            return NextResponse.json({ error: errorData.body }, { status: modulesResponse.status });
         }
 
-        const modelData = await modelResponse.json();
+        const modulesData = await modulesResponse.json();
 
-        return NextResponse.json(modelData, { status: 200 });
+        return NextResponse.json(modulesData, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ error: 'Error connecting to the external API' }, { status: 500 });

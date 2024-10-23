@@ -11,6 +11,7 @@ import AddButton from '@/app/components/buttons/AddButton';
 import RightArrowButton from '@/app/components/buttons/RightArrowButton';
 import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
 import SearchForm from '@/app/components/inputs/search';
+import SkeletonTable from '@/app/components/skeletons/skeletonTable'; 
 
 const Inventory = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -66,7 +67,7 @@ const Inventory = () => {
           </div>
 
           {loading ? (
-            <p>Cargando datos de inventario...</p> 
+            <SkeletonTable />
           ) : paginatedInventoryData.length === 0 ? (
             <EmptyState
               message="No se encontraron resultados en el inventario."

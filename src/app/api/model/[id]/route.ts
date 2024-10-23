@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
-    const URL_API_MODELS = "http://localhost:4000/api/modelos";
+export async function GET(req: NextRequest, { params }: { params: { id: number } })  {
+    const URL_API_MODELS = "http://localhost:4000/api/modelos/";
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
+    const id_model = params.id;
 
     try {
-        const modelResponse = await fetch(URL_API_MODELS, {
+        const modelResponse = await fetch(`${URL_API_MODELS}${id_model}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

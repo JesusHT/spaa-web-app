@@ -38,7 +38,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
       <table className="min-w-full bg-white border mt-5 text-black border-gray-200 rounded-lg shadow-md">
         <thead>
           <tr className="bg-gray-100 border-b">
-            <th className="py-3 px-6 text-left text-gray-600">ID</th>
+            <th className="py-3 px-6 text-left text-gray-600">Folio</th>
             <th className="py-3 px-6 text-left text-gray-600">Nombre</th>
             <th className="py-3 px-6 text-left text-gray-600">Cantidad</th>
             <th className="py-3 px-6 text-left text-gray-600">Descripción</th>
@@ -48,7 +48,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
         <tbody>
           {inventoryData.map((item) => (
             <tr key={item.id_inventory} className="border-b hover:bg-gray-50">
-              <td className="py-3 px-6">{item.id_inventory}</td>
+              <td className="py-3 px-6">{item.folio}</td>
               <td className="py-3 px-6">{item.name}</td>
               <td className="py-3 px-6">{item.quantity}</td>
               <td className="py-3 px-6">{item.description}</td>
