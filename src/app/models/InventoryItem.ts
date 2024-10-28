@@ -9,6 +9,7 @@ export interface InventoryItem {
     name: string;
     not_located: string | null;
     quantity: number;
+    stock: number;
     second_custodian: string | null;
     serie: string;
     status: number;
