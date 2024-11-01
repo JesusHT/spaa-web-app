@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { InventoryItem } from '@/app/models/InventoryItem'; 
 
 const useDashboard = () => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [inventoryData, setInventoryData] = useState<any[]>([]);
+    const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>(''); 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
@@ -32,6 +33,30 @@ const useDashboard = () => {
 
         fetchInventoryData();
     }, []);
+
+    const fetchInventoryById = async (id_inventory: number): Promise<InventoryItem> => {
+        try {
+          const response = await fetch(`/api/inventory/${id_inventory}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al obtener el inventario');
+          }
+      
+          const data = await response.json();
+      
+          return data.body[0] as InventoryItem;
+        } catch (error) {
+          console.error('Error al obtener el inventario:', error);
+          throw error;
+        }
+    };
 
     const handlePageChange = (direction: 'next' | 'prev') => {
         if (direction === 'next' && currentPage < totalPages) {
@@ -82,7 +107,8 @@ const useDashboard = () => {
         setCurrentPage,
         totalPages,
         searchTerm,
-        setSearchTerm
+        setSearchTerm,
+        fetchInventoryById
     };
 };
 

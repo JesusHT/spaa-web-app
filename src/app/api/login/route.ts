@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { serialize } from 'cookie';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function POST(req: NextRequest) {
     const { worker_number, password } = await req.json();
-    const URL_API_LOGIN = "http://localhost:4000/api/auth/login";
 
     try {
-        const externalApiResponse = await fetch(URL_API_LOGIN, {
+        const externalApiResponse = await fetch(API_ROUTES.LOGIN, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

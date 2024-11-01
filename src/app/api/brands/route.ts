@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function GET(req: NextRequest) {
-    const URL_API_BRANDS = "http://localhost:4000/api/marcas";
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
 
     try {
-        const brandsResponse = await fetch(URL_API_BRANDS, {
+        const brandsResponse = await fetch(API_ROUTES.BRANDS, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

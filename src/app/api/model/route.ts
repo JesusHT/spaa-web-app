@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function GET(req: NextRequest) {
-    const URL_API_MODELS = "http://localhost:4000/api/modelos";
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
 
     try {
-        const modelResponse = await fetch(URL_API_MODELS, {
+        const modelResponse = await fetch(API_ROUTES.MODELS, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

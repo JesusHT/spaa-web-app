@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function GET(req: NextRequest) {
-    const URL_API_USER_AUTH = "http://localhost:4000/protected-route";
-    const URL_API_USER_DATA = "http://localhost:4000/api/usuarios/"
     const cookies = req.cookies.get('token');
     const token   = cookies?.value;
 
     try {
-        const authResponse = await fetch(URL_API_USER_AUTH, {
+        const authResponse = await fetch(API_ROUTES.USER_AUTH, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest) {
 
         const id_auth = authData.id_auth; 
 
-        const userResponse = await fetch(`${URL_API_USER_DATA}${id_auth}`, {
+        const userResponse = await fetch(`${API_ROUTES.USER_DATA}${id_auth}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

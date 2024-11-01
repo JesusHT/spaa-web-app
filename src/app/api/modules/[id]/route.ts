@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function GET(req: NextRequest, { params }: { params: { id: number }}) {
-    const URL_API_MODULES = "http://localhost:4000/api/laboratorios/";
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
     const id_modules = params.id;
 
     try {
-        const modulesResponse = await fetch(`${URL_API_MODULES}${id_modules}`, {
+        const modulesResponse = await fetch(`${API_ROUTES.MODULES}${id_modules}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

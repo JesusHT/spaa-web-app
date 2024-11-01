@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function POST(req: NextRequest) {
     const {
@@ -19,8 +20,6 @@ export async function POST(req: NextRequest) {
         brand_name          
     } = await req.json();
 
-    const URL_API_INVENTARIO = "http://localhost:4000/api/inventario/";
-
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
     console.log(model_name)
@@ -30,7 +29,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const externalApiResponse = await fetch(URL_API_INVENTARIO, {
+        const externalApiResponse = await fetch(API_ROUTES.INVENTORY, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-
-interface Brands {
-  id: number;
-  name: string;
-}
+import { Brands } from '@/app/models/BrandModel';
 
 const useBrands = () => {
   const [brands, setBrands] = useState<Brands[]>([]);
@@ -31,7 +27,31 @@ const useBrands = () => {
     fetchBrands();
   }, []);
 
-  return { brands, loadingBrands, error };
+  const fetchBrandsById = async (id_brands: number): Promise<Brands> => {
+    try {
+      const response = await fetch(`/api/brands/${id_brands}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al obtener el marcas');
+      }
+  
+      const data = await response.json();
+  
+      return data.body[0] as Brands;
+    } catch (error) {
+      console.error('Error al obtener las marcas:', error);
+      throw error;
+    }
+  };
+
+  return { brands, loadingBrands, error, fetchBrandsById};
 };
 
 export default useBrands;

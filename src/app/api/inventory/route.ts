@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { API_ROUTES } from '@/app/api/config/routes';
 
 export async function GET(req: NextRequest) {
-    const URL_API_INVENTORY = "http://localhost:4000/api/inventario";
     const cookies = req.cookies.get('token');
     const token   = cookies?.value;
 
     try {
-        const inventoryResponse = await fetch(URL_API_INVENTORY, {
+        const inventoryResponse = await fetch(API_ROUTES.INVENTORY, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

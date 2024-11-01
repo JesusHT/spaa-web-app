@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
-import { fetchInventory } from '@/app/utils/fetchInventory';
-import { fetchModel } from '@/app/utils/fetchModel';
-import { fetchBrands } from '@/app/utils/fetchBrands';
-import { fetchModules } from '@/app/utils/fetchModules';
+import useModel from '@/app/hooks/useModel';
+import useBrands from '@/app/hooks/useBrands';
+import useModules from '@/app/hooks/useModules';
+import useDashboard from '@/app/hooks/useInventory';
 
 import { InventoryItem } from '@/app/models/InventoryItem';
 import { Brands } from '@/app/models/BrandModel';
@@ -22,14 +22,18 @@ const InventoryView = () => {
   const [brand, setBrand] = useState<Brands | null>(null);
   const [model, setModel] = useState<Model | null>(null);
   const [modules, setModules] = useState<Modules | null>(null);
+  const { fetchModelById } = useModel(); 
+  const { fetchBrandsById } = useBrands();
+  const { fetchModulesById } = useModules();
+  const { fetchInventoryById } = useDashboard();
 
   useEffect(() => {
     const getData = async () => {
       if (id) {
-        const fetchedData = await fetchInventory(Number(id));
-        const fetchedBrand = await fetchBrands(fetchedData.id_brand);
-        const fetchedModel = await fetchModel(fetchedData?.id_model);
-        const fetchedModules = await fetchModules(fetchedData.id_module);
+        const fetchedData    = await fetchInventoryById(Number(id));
+        const fetchedBrand   = await fetchBrandsById(fetchedData.id_brand);
+        const fetchedModel   = await fetchModelById(fetchedData.id_model);
+        const fetchedModules = await fetchModulesById(fetchedData.id_module);
 
         setBrand(fetchedBrand);
         setModel(fetchedModel);

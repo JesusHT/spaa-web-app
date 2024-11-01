@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
-
-interface model {
-  id: number;
-  name: string;
-}
+import { Model } from '@/app/models/ModelsModel';
 
 const useModel = () => {
-  const [models, setModel] = useState<model[]>([]);
+  const [models, setModels] = useState<Model[]>([]);
   const [loadingModel, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchModel = async () => {
+    const fetchModels = async () => {
       try {
         const response = await fetch('/api/model');
         
@@ -20,7 +16,7 @@ const useModel = () => {
         }
 
         const data = await response.json();
-        setModel(data.body);
+        setModels(data.body);
       } catch (err) {
         setError('Failed to fetch model');
       } finally {
@@ -28,10 +24,34 @@ const useModel = () => {
       }
     };
 
-    fetchModel();
+    fetchModels();
   }, []);
 
-  return { models, loadingModel, error };
+  const fetchModelById = async (id_model: number): Promise<Model> => {
+    try {
+      const response = await fetch(`/api/model/${id_model}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error fetching models');
+      }
+  
+      const data = await response.json();
+
+      return data.body[0] as Model;
+    } catch (error) {
+      console.error('Error al obtener el modelo:', error);
+      throw error;
+    }
+  };
+
+  return { models, loadingModel, error, fetchModelById };
 };
 
 export default useModel;
