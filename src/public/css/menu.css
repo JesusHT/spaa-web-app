@@ -1,0 +1,14 @@
+.bg-menu {
+    background-color: #052318;
+}
+
+.bg-secondary-color {
+    background-color: #E2F6CA;
+    color: #052318;
+}
+
+li:hover{
+    background-color: #E2F6CA;
+    color: #052318;
+    border-radius: 10px;
+}

@@ -14,6 +14,7 @@ import AddButton from '@/app/components/buttons/AddButton';
 import RightArrowButton from '@/app/components/buttons/RightArrowButton';
 import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
 import SearchForm from '@/app/components/inputs/search';
+import SkeletonTableUsers from '@/app/components/skeletons/skeletonTableUsers';
 
 const Users = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -48,7 +49,7 @@ const Users = () => {
   };
 
   if (isAuthenticated === null) {
-    return <h1>Cargando...</h1>;
+    return null;
   }
 
   if (!isAuthenticated) {
@@ -57,8 +58,6 @@ const Users = () => {
   }
 
   return (
-    <div className="flex">
-      <Menu /> 
       <div className="flex-grow p-6">
         {error && <p>Error: {error}</p>}
 
@@ -71,9 +70,9 @@ const Users = () => {
         <>
           <h1 className="text-2xl font-bold mb-4">Usuarios</h1>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 justify-end">
             <SearchForm
-              placeholderText="Buscar por ID o nombre"
+              placeholderText="Buscar por ID, nombre"
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
@@ -81,7 +80,7 @@ const Users = () => {
           </div>
 
           {loading ? (
-            <p>Cargando datos de usuarios...</p> 
+            <SkeletonTableUsers />
           ) : paginatedUsersData.length === 0 ? (
             <EmptyState
               message="No se encontraron resultados de usuarios."
@@ -113,7 +112,6 @@ const Users = () => {
           )}
         </>
       </div>
-    </div>
   );
 };
 

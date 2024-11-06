@@ -29,7 +29,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 }) => {
     return (
         <div className="mb-4">
-            <label htmlFor={name} className="block text-white">{selectLabel}</label>
+            <label htmlFor={name} className="block text-black">{selectLabel}</label>
             <select
                 id={name}
                 name={name}

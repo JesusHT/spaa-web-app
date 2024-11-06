@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import Menu from '../ui/nav-links';
-import { useAuthentication } from '../hooks/useAuthentication';
 import { useRouter } from 'next/navigation';
+
+import Menu from '@/app/ui/nav-links';
+import { useAuthentication } from '@/app/hooks/useAuthentication';
 
 export default function Dashboard() {
   const isAuthenticated = useAuthentication();
@@ -20,8 +21,12 @@ export default function Dashboard() {
 
   return (
     <>
+    <div className="flex">
       <Menu />
-      
+      <div className="flex-grow p-6">
+        <h1 className="text-2xl font-bold mb-4">Estadisticas</h1>
+      </div>
+    </div>
     </>
   );
 }

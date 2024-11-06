@@ -10,7 +10,7 @@ export default function History() {
   const router = useRouter();
 
   if (isAuthenticated === null) {
-    return <h1>Cargando...</h1>;
+    return null;
   }
 
   if (!isAuthenticated) {
@@ -20,8 +20,12 @@ export default function History() {
 
   return (
     <>
+    <div className="flex">
       <Menu />
-      
+      <div className="flex-grow p-6">
+        <h1 className="text-2xl font-bold mb-4">Historial</h1>
+      </div>
+    </div>
     </>
   );
 }

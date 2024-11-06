@@ -47,10 +47,10 @@ const InventoryForm: React.FC<InventoryFormProps> = ({ idModule }) => {
   const { models, loadingModel, error: modelError } = useModel();
 
   return (
-    <div className='flex justify-center space-x-4"'>
+    <div className='flex justify-center'>
         {error && <MessageError error={error} />}
 
-        <form onSubmit={handleSubmit} className="space-y-4 text-black p-2">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-7 w-1/3 rounded-md">
                 <input type="hidden" id="second_custodian" name="second_custodian" value="null" required/>
                 <input type="hidden" id="not_located" name="not_located" value="null" required/>
                 <input type="hidden" id="status" name="status" value="1" required />
@@ -93,16 +93,6 @@ const InventoryForm: React.FC<InventoryFormProps> = ({ idModule }) => {
                 />
 
                 <BaseInput
-                    id="quantity"
-                    name="quantity"
-                    type="number"
-                    placeholder="Cantidad"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                    required
-                />
-
-                <BaseInput
                     id="folio"
                     name="folio"
                     type="number"
@@ -113,21 +103,33 @@ const InventoryForm: React.FC<InventoryFormProps> = ({ idModule }) => {
                 />
 
                 <BaseInput
-                    id="description"
-                    name="description"
-                    type="text"
-                    placeholder="Descripción"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-
-                <BaseInput
                     id="serie"
                     name="serie"
                     type="text"
                     placeholder="Número de Serie"
                     value={serie}
                     onChange={(e) => setSerie(e.target.value)}
+                />
+
+                <BaseInput
+                    id="quantity"
+                    name="quantity"
+                    type="number"
+                    placeholder="Cantidad"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    required
+                />
+
+                
+
+                <BaseInput
+                    id="description"
+                    name="description"
+                    type="text"
+                    placeholder="Descripción"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                 />
 
                 <BaseInput

@@ -55,11 +55,11 @@ const Inventory = () => {
         )}
 
         <>
-          <h1 className="text-2xl font-bold mb-4">Inventario</h1>
+          <h1 className="text-2xl font-bold mb-3">Inventario</h1>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 justify-end">
             <SearchForm
-              placeholderText="Buscar por ID, nombre o descripción..."
+              placeholderText="Buscar por folio, nombre o descripción..."
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
