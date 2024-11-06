@@ -46,6 +46,7 @@ const InventoryForm: React.FC<InventoryFormProps> = ({ idModule }) => {
   const { brands, loadingBrands, error: brandsError } = useBrands();
   const { models, loadingModel, error: modelError } = useModel();
 
+  console.log(brands)
   return (
     <div className='flex justify-center'>
         {error && <MessageError error={error} />}

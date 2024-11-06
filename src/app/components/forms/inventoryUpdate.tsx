@@ -13,7 +13,7 @@ import InputSelect from "@/app/components/inputs/selectInput";
 import { InventoryItem } from '@/app/models/InventoryItem';
 
 interface InventoryFormProps {
-    idModule: number | null;
+    idModule: number | 0;
     inventoryItem?: InventoryItem | null; 
   }
   
@@ -63,8 +63,8 @@ interface InventoryFormProps {
         setDescription(inventoryItem.description);
         setSerie(inventoryItem.serie);
         setImageUrl(inventoryItem.image_url);
-        setBrandName(inventoryItem.id_brand ? brands.find(b => b.id_brands === inventoryItem.id_brand)?.name || '' : '');
-        setModelName(inventoryItem.id_model ? models.find(m => m.id_model === inventoryItem.id_model)?.name || '' : '');
+        setBrandName(inventoryItem.id_brand ? brands.find(b => b.id === inventoryItem.id_brand)?.name || '' : '');
+        setModelName(inventoryItem.id_model ? models.find(m => m.id === inventoryItem.id_model)?.name || '' : '');
       }
     }, [inventoryItem, brands, models, setName, setIdBrand, setIdModel, setQuantity, setFolio, setDescription, setSerie, setImageUrl, setBrandName, setModelName, setIdInventory]);
   

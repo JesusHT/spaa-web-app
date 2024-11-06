@@ -1,4 +1,6 @@
 import React from 'react';
+import { Brands } from '@/app/models/BrandModel';
+import { Model } from '@/app/models/ModelsModel';
 
 interface InputSelectProps {
     name: string;
@@ -8,7 +10,7 @@ interface InputSelectProps {
     setShowInputField: (show: boolean) => void;
     inputValue: string;
     setInputValue: (value: string) => void;
-    options: { id: number; name: string }[];
+    options: Model[] | Brands[];
     inputPlaceholder: string;
     selectLabel: string;
     inputLabel?: string;
@@ -24,9 +26,13 @@ const InputSelect: React.FC<InputSelectProps> = ({
     setInputValue,
     options,
     inputPlaceholder,
-    selectLabel,
-    inputLabel = `Nombre de ${name}`
+    selectLabel
 }) => {
+
+    {options && options.map((option) => (
+        console.log(option.id)
+    ))}
+
     return (
         <div className="mb-4">
             <label htmlFor={name} className="block text-black">{selectLabel}</label>
@@ -36,8 +42,10 @@ const InputSelect: React.FC<InputSelectProps> = ({
                 className="w-full p-2 border border-gray-300 rounded"
                 value={idValue}
                 onChange={(e) => {
+                    console.log(e.target.value)
                     const value = e.target.value;
                     setIdValue(value);
+                    console.log(value)
                     if (value === '0') setShowInputField(true);
                     else setShowInputField(false);
                 }}

@@ -22,7 +22,6 @@ export async function POST(req: NextRequest) {
 
     const cookies = req.cookies.get('token');
     const token = cookies?.value;
-    console.log(model_name)
 
     if (!token) {
         return NextResponse.json({ error: 'No token provided' }, { status: 401 });
