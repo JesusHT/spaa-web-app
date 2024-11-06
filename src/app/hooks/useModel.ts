@@ -6,6 +6,13 @@ const useModel = () => {
   const [loadingModel, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const transformModelData = (apiData: any): Model[] => {
+    return apiData.map((item: any) => ({
+      id: item.id_model, 
+      name: item.name
+    }));
+  };
+
   useEffect(() => {
     const fetchModels = async () => {
       try {
@@ -16,7 +23,9 @@ const useModel = () => {
         }
 
         const data = await response.json();
-        setModels(data.body);
+        const transformedModels = transformModelData(data.body);
+        setModels(transformedModels);
+
       } catch (err) {
         setError('Failed to fetch model');
       } finally {

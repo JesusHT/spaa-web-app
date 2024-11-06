@@ -6,6 +6,13 @@ const useBrands = () => {
   const [loadingBrands, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const transformBrandsData = (apiData: any): Brands[] => {
+    return apiData.map((item: any) => ({
+      id: item.id_brands, 
+      name: item.name
+    }));
+  };
+
   useEffect(() => {
     const fetchBrands = async () => {
       try {
@@ -16,7 +23,9 @@ const useBrands = () => {
         }
 
         const data = await response.json();
-        setBrands(data.body);
+        const transformedBrands = transformBrandsData(data.body);
+        
+        setBrands(transformedBrands);
       } catch (err) {
         setError('Failed to fetch brands');
       } finally {
