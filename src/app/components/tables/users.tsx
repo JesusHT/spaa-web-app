@@ -4,11 +4,11 @@ import ViewButton from '../buttons/ViewButton';
 import UpdateButton from '../buttons/UpdateButton';
 import DeleteButton from '../buttons/DeleteButton';
 import Modal from '../modal/modal';
-import { User } from '@/app/models/UserModel';
+import { Profile } from '@/app/models/ProfileModel';
 
 
 type UsersTableProps = {
-  usersData: User[];
+  usersData: Profile[];
   onView: (id: number) => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
@@ -47,14 +47,14 @@ const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDe
         </thead>
         <tbody>
           {usersData.map((item) => (
-            <tr key={item.id_users} className="border-b hover:bg-gray-50">
-              <td className="py-3 px-6">{item.id_users}</td>
-              <td className="py-3 px-6">{item.name}</td>
-              <td className="py-3 px-6">{item.email}</td>
+            <tr key={item.user.id_users} className="border-b hover:bg-gray-50">
+              <td className="py-3 px-6">{item.user.id_users}</td>
+              <td className="py-3 px-6">{item.user.name}</td>
+              <td className="py-3 px-6">{item.user.email}</td>
               <td className="py-3 px-6 flex space-x-2">
-                <ViewButton onClick={() => onView(item.id_users)} />
-                <UpdateButton onClick={() => onEdit(item.id_users)} />
-                <DeleteButton onClick={() => handleDeleteClick(item.id_users)} />
+                <ViewButton onClick={() => onView(item.user.id_users)} />
+                <UpdateButton onClick={() => onEdit(item.user.id_users)} />
+                <DeleteButton onClick={() => handleDeleteClick(item.user.id_users)} />
               </td>
             </tr>
           ))}

@@ -1,38 +1,18 @@
 import { useState, useEffect } from 'react';
-
 import { Profile } from '@/app/models/ProfileModel';
-import { User } from '@/app/models/UserModel';
 
-const useUsers = () => {
+const useUsers = (id_module: number, id_role: number, id_users: number) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [usersData, setUsersData] = useState<User[]>([]);
+    const [usersData, setUsersData] = useState<Profile[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>(''); 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
 
-    const [currentUser, setCurrentUser] = useState<Profile | null>(null);
-
     useEffect(() => {
-        const fetchUsersData = async () => {
+        const fetchUsersData = async (id_module: number, id_role: number,  id_users: number) => {
             setLoading(true);
             try {
-                const profileResponse = await fetch('/api/auth/profile', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include',
-                });
-
-                if (!profileResponse.ok) {
-                    const errorData = await profileResponse.json();
-                    throw new Error(errorData.error || 'Error al obtener el perfil del usuario');
-                }
-
-                const profileData: Profile = await profileResponse.json();
-                setCurrentUser(profileData);
-
                 const usersResponse = await fetch('/api/users', {
                     method: 'GET',
                     headers: {
@@ -47,19 +27,13 @@ const useUsers = () => {
                 }
 
                 const data = await usersResponse.json();
-                const users: User[] = data.body;
 
-                if (!Array.isArray(users)) {
-                    throw new Error('La respuesta de la API no es un array');
-                }
+                const filteredData = data.filter((profiles : Profile) => 
+                    profiles.user.id_modules === id_module && profiles.auth.id_role > id_role && profiles.user.id_users !== id_users
+                );
+                
+                setUsersData(filteredData);
 
-                const filteredUsers = users.filter(user => {
-                    const sameModule = user.id_modules === profileData.user.id_modules;
-                    const hasPermission = user.id_role >= profileData.user.id_role;
-                    return sameModule && hasPermission;
-                });
-
-                setUsersData(filteredUsers);
             } catch (error: any) {
                 setError(error.message || 'Error al obtener datos');
             } finally {
@@ -67,8 +41,8 @@ const useUsers = () => {
             }
         };
 
-        fetchUsersData();
-    }, []);
+        fetchUsersData(id_module, id_role, id_users);
+    }, [id_module, id_role, id_users]);
 
     const handlePageChange = (direction: 'next' | 'prev') => {
         const totalPages = Math.ceil(usersData.length / itemsPerPage);
@@ -91,9 +65,9 @@ const useUsers = () => {
         alert(`Eliminar usuario ${id}`);
     };
 
-    const filteredUsersData = usersData.filter(user => 
-        (user.id_users && user.id_users.toString().includes(searchTerm)) || 
-        (user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredUsersData = usersData.filter(profile => 
+        (profile.user.id_users && profile.user.id_users.toString().includes(searchTerm)) || 
+        (profile.user.name && profile.user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     const paginatedUsersData = filteredUsersData.slice(

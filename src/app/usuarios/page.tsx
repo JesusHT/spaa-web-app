@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useAuthentication } from '@/app/hooks/useAuthentication';
 import useUsers from '@/app/hooks/useUsers';
 
-import Menu from '@/app/ui/nav-links';
-
 import EmptyState from '@/app/components/emptyState/table';
 import UsersTable from '@/app/components/tables/users'; 
 import AddButton from '@/app/components/buttons/AddButton';
@@ -15,10 +13,16 @@ import RightArrowButton from '@/app/components/buttons/RightArrowButton';
 import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
 import SearchForm from '@/app/components/inputs/search';
 import SkeletonTableUsers from '@/app/components/skeletons/skeletonTableUsers';
+import { useProfile } from '@/app/context/profileContext';
+
 
 const Users = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const isAuthenticated = useAuthentication();
+  const { profile } = useProfile();
+  const id_modules = profile?.user.id_modules || 0;
+  const id_role = profile?.auth.id_role || 0;
+  const id_users = profile?.user.id_users || 0;
   const router = useRouter();
 
   const {
@@ -33,7 +37,7 @@ const Users = () => {
     totalPages,
     searchTerm,
     setSearchTerm
-  } = useUsers();
+  } = useUsers(id_modules, id_role, id_users);
 
   useEffect(() => {
     const insertSuccess = sessionStorage.getItem('insertSuccess');

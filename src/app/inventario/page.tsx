@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useProfile } from '@/app/context/profileContext';
 
 import EmptyState from '@/app/components/emptyState/table';
 import useInventory from '@/app/hooks/useInventory';
@@ -15,6 +16,8 @@ import SkeletonTable from '@/app/components/skeletons/skeletonTable';
 
 const Inventory = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const { profile } = useProfile();
+  const idModule = profile?.user.id_modules || 0;
   const router = useRouter();
 
   const {
@@ -29,13 +32,20 @@ const Inventory = () => {
     totalPages,
     searchTerm,
     setSearchTerm
-  } = useInventory();
+  } = useInventory(idModule);
 
   useEffect(() => {
     const insertSuccess = sessionStorage.getItem('insertSuccess');
     if (insertSuccess) {
       setSuccessMessage('Elemento insertado correctamente');
       sessionStorage.removeItem('insertSuccess'); 
+      setTimeout(() => setSuccessMessage(null), 5000);
+    }
+
+    const updateSuccess = sessionStorage.getItem('updateSuccess');
+    if (updateSuccess) {
+      setSuccessMessage('Elemento actualizado correctamente.');
+      sessionStorage.removeItem('updateSuccess'); 
       setTimeout(() => setSuccessMessage(null), 5000);
     }
   }, []);
