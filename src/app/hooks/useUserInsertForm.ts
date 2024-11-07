@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const useUserInsertForm = () => {
+const useUserInsertForm = (id_modules: number) => {
     const [name, setName] = useState<string>('');
     const [idRole, setIdRole] = useState<number>(0);
-    const [idModules, setIdModules] = useState<string>('');
     const [workerNumber, setWorkerNumber] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [email, setEmail] = useState<string>('');
@@ -28,7 +27,7 @@ const useUserInsertForm = () => {
         const formData = {
             id_role: idRole,
             name,
-            id_modules: idModules,
+            id_modules,
             worker_number: workerNumber,
             password,
             email,
@@ -38,25 +37,7 @@ const useUserInsertForm = () => {
             lends: lendsPermission,
         };
 
-        try {
-            const response = await fetch('/api/users/insert', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                sessionStorage.setItem('insertSuccess', 'true');
-                router.push('/usuarios');
-            } else {
-                const data = await response.json();
-                setError(data.error || 'An error occurred');
-            }
-        } catch (err) {
-            setError('An error occurred during insertion');
-        }
+        console.log(formData)
     };
 
     return {
@@ -64,8 +45,6 @@ const useUserInsertForm = () => {
         setName,
         idRole,
         setIdRole,
-        idModules,
-        setIdModules,
         workerNumber,
         setWorkerNumber,
         password,

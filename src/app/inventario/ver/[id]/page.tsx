@@ -2,43 +2,27 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-
-import useModel from '@/app/hooks/useModel';
-import useBrands from '@/app/hooks/useBrands';
-import useModules from '@/app/hooks/useModules';
 import useDashboard from '@/app/hooks/useInventory';
 
-import { InventoryItem } from '@/app/models/InventoryItem';
-import { Brands } from '@/app/models/BrandModel';
-import { Model } from '@/app/models/ModelsModel';
-import { Modules } from '@/app/models/ModulesModel';
+import { InventoryItemDetails } from '@/app/models/InventoryDetailsModel';
 
 import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
+import { useProfile } from '@/app/context/profileContext';
 
 const InventoryView = () => {
   const router = useRouter();
+  const { profile } = useProfile();
+  const [data, setData] = useState<InventoryItemDetails | null>(null);
+  const idModule = Number(profile?.user.id_modules);
   const { id } = useParams();
-  const [data, setData] = useState<InventoryItem | null>(null);
-  const [brand, setBrand] = useState<Brands | null>(null);
-  const [model, setModel] = useState<Model | null>(null);
-  const [modules, setModules] = useState<Modules | null>(null);
-  const { fetchModelById } = useModel(); 
-  const { fetchBrandsById } = useBrands();
-  const { fetchModulesById } = useModules();
-  const { fetchInventoryById } = useDashboard();
+  const { fetchInventoryDetailsById } = useDashboard(idModule);
 
   useEffect(() => {
     const getData = async () => {
       if (id) {
-        const fetchedData    = await fetchInventoryById(Number(id));
-        const fetchedBrand   = await fetchBrandsById(fetchedData.id_brand);
-        const fetchedModel   = await fetchModelById(fetchedData.id_model);
-        const fetchedModules = await fetchModulesById(fetchedData.id_module);
+        const fetchedData = await fetchInventoryDetailsById(Number(id));
 
-        setBrand(fetchedBrand);
-        setModel(fetchedModel);
         setData(fetchedData);
-        setModules(fetchedModules);
       }
     };
     getData();
@@ -69,15 +53,15 @@ const InventoryView = () => {
               </div>
               <div>
                 <dt className="font-semibold">Marca:</dt>
-                <dd className="mt-1">{brand?.name}</dd>
+                <dd className="mt-1">{data?.brand_name}</dd>
               </div>
               <div>
                 <dt className="font-semibold">Modelo:</dt>
-                <dd className="mt-1">{model?.name}</dd>
+                <dd className="mt-1">{data?.model_name}</dd>
               </div>
               <div>
                 <dt className="font-semibold">Módulo:</dt>
-                <dd className="mt-1">{modules?.name}</dd>
+                <dd className="mt-1">{data?.module_name}</dd>
               </div>
               <div>
                 <dt className="font-semibold">Serie:</dt>
@@ -89,7 +73,7 @@ const InventoryView = () => {
               </div>
               <div>
                 <dt className="font-semibold">Estado:</dt>
-                <dd className="mt-1">{data?.status}</dd>
+                <dd className="mt-1">{data?.status === 1 ? 'Activo' : 'Inactivo'}</dd>
               </div>
               {data?.not_located && (
                 <div>

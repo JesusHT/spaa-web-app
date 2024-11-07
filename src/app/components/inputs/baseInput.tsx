@@ -11,7 +11,7 @@ interface BaseInputProps {
 const BaseInput: React.FC<BaseInputProps> = ({ id, name, type, placeholder, value, onChange, required }) => {
     return (
         <div className="mb-4">
-            <label htmlFor="quantity" className="block text-black">{placeholder}</label>
+            <label htmlFor={id} className="block text-black">{placeholder}</label>
             <input
                 id={id}
                 name={name}

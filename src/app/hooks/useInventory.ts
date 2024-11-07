@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { InventoryItem } from '@/app/models/InventoryItem';
+import { InventoryItemDetails } from '@/app/models/InventoryDetailsModel';
 
 const useDashboard = (id_module: number) => { 
     const router = useRouter();
@@ -59,6 +60,29 @@ const useDashboard = (id_module: number) => {
         }
     };
 
+    const fetchInventoryDetailsById = async (id_inventory: number): Promise<InventoryItemDetails> => {
+        try {
+            const response = await fetch(`/api/inventory/get/${id_inventory}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error al obtener el inventario');
+            }
+
+            const data = await response.json();
+            return data.body[0] as InventoryItemDetails;
+        } catch (error) {
+            console.error('Error al obtener el inventario:', error);
+            throw error;
+        }
+    };
+
     const handlePageChange = (direction: 'next' | 'prev') => {
         if (direction === 'next' && currentPage < totalPages) {
             setCurrentPage(prevPage => prevPage + 1);
@@ -107,7 +131,8 @@ const useDashboard = (id_module: number) => {
         totalPages,
         searchTerm,
         setSearchTerm,
-        fetchInventoryById
+        fetchInventoryById,
+        fetchInventoryDetailsById
     };
 };
 

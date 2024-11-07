@@ -39,7 +39,7 @@ const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDe
       <table className="min-w-full bg-white border mt-5 text-black border-gray-200 rounded-lg shadow-md">
         <thead>
           <tr className="bg-gray-100 border-b">
-            <th className="py-3 px-6 text-left text-gray-600">ID</th>
+            <th className="py-3 px-6 text-left text-gray-600">Número de cuenta</th>
             <th className="py-3 px-6 text-left text-gray-600">Nombre</th>
             <th className="py-3 px-6 text-left text-gray-600">Email</th>
             <th className="py-3 px-6 text-left text-gray-600">Acciones</th>
@@ -48,7 +48,7 @@ const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDe
         <tbody>
           {usersData.map((item) => (
             <tr key={item.user.id_users} className="border-b hover:bg-gray-50">
-              <td className="py-3 px-6">{item.user.id_users}</td>
+              <td className="py-3 px-6">{item.auth.worker_number}</td>
               <td className="py-3 px-6">{item.user.name}</td>
               <td className="py-3 px-6">{item.user.email}</td>
               <td className="py-3 px-6 flex space-x-2">
