@@ -22,14 +22,13 @@ const Login: React.FC = () => {
     } = useLoginForm();
 
     return (
-        <div className="bg-green-50 flex items-center justify-center h-screen">
-            <div className="flex bg-green-300 rounded-lg shadow-lg text-black" style={{ maxWidth: '1200px', width: '100%' }}>
+        <div className="bg-secondary-light flex items-center justify-center h-screen">
+            <div className="flex rounded-lg shadow-lg text-black" style={{ maxWidth: '1200px', width: '100%' }}>
                 <div className="w-1/2">
                     <Image 
                         src={LoginSplash} 
                         alt="Splash" 
                         className="w-full h-full object-cover rounded-l-lg" 
-                        layout="responsive"
                         width={500}
                         height={500}
                         priority
@@ -79,13 +78,7 @@ const Login: React.FC = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <span
-                                className="absolute right-2 top-2 cursor-pointer"
-                                id="eye"
-                                onClick={togglePasswordVisibility}
-                            >
-                                {isPasswordVisible ? '👁️' : '👁️'}
-                            </span>
+                            <i className={`absolute right-2 top-3 cursor-pointer fa-light ${isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'}`} id='eye' onClick={togglePasswordVisibility}></i>
                         </div>
                         <div className="mb-2 text-center">
                             <a href="/recuperar" className="text-sm text-green-600">¿Olvidaste la Contraseña?</a>
