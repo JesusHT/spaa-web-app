@@ -6,12 +6,19 @@ interface BaseSwitchProps {
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     label: string;
+    infoText: string;
 }
 
-const BaseSwitch: React.FC<BaseSwitchProps> = ({ id, name, checked, onChange, label }) => {
+const BaseSwitch: React.FC<BaseSwitchProps> = ({ id, name, checked, onChange, label, infoText }) => {
     return (
         <div className="mb-4 flex items-center">
-            <label htmlFor={id} className="mr-2 text-black cursor-pointer">
+            <label htmlFor={id} className="mr-2 text-black cursor-pointer flex items-center">
+                <span 
+                    className="mr-1 cursor-help" 
+                    title={infoText}
+                >
+                    <i className="fa-solid fa-circle-info text-yellow-500"></i>
+                </span>
                 {label}
             </label>
             <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
@@ -37,3 +44,4 @@ const BaseSwitch: React.FC<BaseSwitchProps> = ({ id, name, checked, onChange, la
 };
 
 export default BaseSwitch;
+

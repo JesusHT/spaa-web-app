@@ -41,7 +41,9 @@ const useUsers = (id_module: number, id_role: number, id_users: number) => {
             }
         };
 
-        fetchUsersData(id_module, id_role, id_users);
+        if (id_module && id_role && id_users) {
+            fetchUsersData(id_module, id_role, id_users);
+        }
     }, [id_module, id_role, id_users]);
 
     const handlePageChange = (direction: 'next' | 'prev') => {

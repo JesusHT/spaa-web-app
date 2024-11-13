@@ -48,6 +48,14 @@ const Inventory = () => {
       sessionStorage.removeItem('updateSuccess'); 
       setTimeout(() => setSuccessMessage(null), 5000);
     }
+
+
+    const deleteSuccess = sessionStorage.getItem('deleteSuccess');
+    if (deleteSuccess) {
+      setSuccessMessage('Elemento eliminado correctamente.');
+      sessionStorage.removeItem('deleteSuccess'); 
+      setTimeout(() => setSuccessMessage(null), 5000);
+    }
   }, []);
 
   const openFormAdd = () => {
@@ -56,7 +64,9 @@ const Inventory = () => {
 
   return (
       <div className="flex-grow p-6">
-        {error && <p>Error: {error}</p>}
+        {error && <div className="mb-4 p-3 text-red-700 bg-red-100 border border-red-400 rounded">
+            {error}
+        </div>}
 
         {successMessage && (
           <div className="mb-4 p-3 text-green-700 bg-green-100 border border-green-400 rounded">

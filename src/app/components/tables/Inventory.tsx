@@ -16,10 +16,12 @@ type InventoryTableProps = {
 const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const [folio, setFolio] = useState<number | null>(null);
 
-  const handleDeleteClick = (id: number) => {
+  const handleDeleteClick = (id: number, folio: number) => {
     setSelectedItem(id);
     setIsModalOpen(true);
+    setFolio(folio);
   };
 
   const handleConfirmDelete = (id: number) => {
@@ -55,7 +57,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
               <td className="py-3 px-6 flex space-x-2">
                 <ViewButton onClick={() => onView(item.id_inventory)} />
                 <UpdateButton onClick={() => onEdit(item.id_inventory)} />
-                <DeleteButton onClick={() => handleDeleteClick(item.id_inventory)} />
+                <DeleteButton onClick={() => handleDeleteClick(item.id_inventory, item.folio)} />
               </td>
             </tr>
           ))}
@@ -68,6 +70,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
         onConfirm={handleConfirmDelete}
         isOpen={isModalOpen}
         onClose={closeModal}
+        folio={Number(folio)}
       />
     </div>
   );

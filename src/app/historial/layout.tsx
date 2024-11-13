@@ -10,11 +10,11 @@ import { Profile } from '@/app/models/ProfileModel';
 
 import useMenu from '@/app/hooks/useMenu';
 
-interface UsersLayoutProps {
+interface HistoryLayoutProps {
   children: React.ReactNode;
 }
 
-const UsersLayout: React.FC<UsersLayoutProps> = ({ children }) => {
+const HistoryLayout: React.FC<HistoryLayoutProps> = ({ children }) => {
   const isAuthenticated = useAuthentication();
   const router = useRouter();
   const [user, setUser] = useState<Profile | null>(null); 
@@ -46,7 +46,7 @@ const UsersLayout: React.FC<UsersLayoutProps> = ({ children }) => {
   return (
     <ProfileProvider profile={user}>
       <section className="flex min-h-screen">
-        <Menu userData={userData}/>
+        <Menu userData={userData} />
         <div className="flex-grow">
           {children}
         </div>
@@ -55,4 +55,4 @@ const UsersLayout: React.FC<UsersLayoutProps> = ({ children }) => {
   );
 };
 
-export default UsersLayout;
+export default HistoryLayout;

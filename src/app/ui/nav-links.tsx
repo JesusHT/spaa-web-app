@@ -1,17 +1,16 @@
-'use client'
-
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import useMenu from '@/app/hooks/useMenu';
 import useLogout from '@/app/hooks/useLogout';
 import SkeletonMenu from '@/app/components/skeletons/skeletonMenu';
-import '@/public/css/menu.css';
+import { Profile } from '@/app/models/ProfileModel';
 
-export default function NavLinks() {
+interface MenuProps {
+  userData: Profile | null;
+}
+
+export default function Menu({ userData }: MenuProps) {
   const pathname = usePathname();
-  const { userData, error } = useMenu();
   const { handleSubmit } = useLogout();
-  
 
   if (!userData) {
     return <SkeletonMenu />;
@@ -19,7 +18,6 @@ export default function NavLinks() {
 
   return (
     <nav className="flex flex-col w-60 h-screen bg-menu text-white" id="menu">
-
       <div className="flex items-center justify-between px-6 py-4">
         <h1 className="text-xl font-semibold">
           {userData?.user?.name || 'Usuario'}
@@ -37,9 +35,9 @@ export default function NavLinks() {
 
           <li>
             <Link href="/inventario" className={`flex items-center p-2 text-lg rounded-md ${pathname.includes('/inventario') ? 'bg-secondary-color' : ''}`}>
-                <i className="fa-solid fa-chart-simple fa-2x mr-3"></i>
-                <span>Inventario</span>
-              </Link>
+              <i className="fa-solid fa-chart-simple fa-2x mr-3"></i>
+              <span>Inventario</span>
+            </Link>
           </li>
 
           {userData?.auth?.id_role !== 3 && (
@@ -56,11 +54,11 @@ export default function NavLinks() {
                   <span>Historial</span>
                 </Link>
               </li>
-              
             </>
           )}
         </ul>
       </div>
+      
       <div className="p-4">
         <ul className="flex flex-col p-4 space-y-2 border-t border-gray-700">
           <li>

@@ -35,7 +35,7 @@ const InventoryLayout: React.FC<InventoryLayoutProps> = ({ children }) => {
   return (
     <ProfileProvider profile={user}>
       <section className="flex min-h-screen">
-        <Menu />
+        <Menu userData={userData}/>
         <div className="flex-grow">
           {children}
         </div>

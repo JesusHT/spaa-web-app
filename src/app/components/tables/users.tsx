@@ -17,9 +17,11 @@ type UsersTableProps = {
 const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const [worker_number, setWorkerNumber] = useState<number | null>(null);
 
-  const handleDeleteClick = (id: number) => {
+  const handleDeleteClick = (id: number, worker_number: number) => {
     setSelectedItem(id);
+    setWorkerNumber(worker_number);
     setIsModalOpen(true);
   };
 
@@ -54,7 +56,7 @@ const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDe
               <td className="py-3 px-6 flex space-x-2">
                 <ViewButton onClick={() => onView(item.user.id_users)} />
                 <UpdateButton onClick={() => onEdit(item.user.id_users)} />
-                <DeleteButton onClick={() => handleDeleteClick(item.user.id_users)} />
+                <DeleteButton onClick={() => handleDeleteClick(item.user.id_users, item.auth.worker_number)} />
               </td>
             </tr>
           ))}
@@ -63,10 +65,11 @@ const usersTable: React.FC<UsersTableProps> = ({ usersData, onView, onEdit, onDe
 
       <Modal
         id_item={selectedItem ?? 0}
-        type="users item"
+        type="usuario"
         onConfirm={handleConfirmDelete}
         isOpen={isModalOpen}
         onClose={closeModal}
+        worker_number={Number(worker_number)}
       />
     </div>
   );

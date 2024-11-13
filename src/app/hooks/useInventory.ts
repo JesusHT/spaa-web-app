@@ -24,7 +24,10 @@ const useDashboard = (id_module: number) => {
 
             const data = await response.json();
             
-            const filteredData = data.body.filter((item: InventoryItem) => item.id_module === id_module);
+            const filteredData = data.body.filter((item: InventoryItem) => {
+                return item.id_module === id_module && item.status !== 0;
+            });
+
             setInventoryData(filteredData);
         } catch (error: any) {
             setError(error.message);
@@ -34,7 +37,9 @@ const useDashboard = (id_module: number) => {
     };
 
     useEffect(() => {
-        fetchInventoryData(id_module); 
+        if (id_module) {
+            fetchInventoryData(id_module); 
+        }
     }, [id_module]); 
 
     const fetchInventoryById = async (id_inventory: number): Promise<InventoryItem> => {
@@ -99,8 +104,26 @@ const useDashboard = (id_module: number) => {
         router.push(`/inventario/editar/${id}`);
     };
 
-    const handleDelete = (id: number) => {
-        alert(`Delete item ${id}`);
+    const handleDelete = async (id: number) => {
+        try {
+            const response = await fetch(`/api/inventory/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                sessionStorage.setItem('deleteSuccess', 'true');
+                window.location.reload();
+            } else {
+                const data = await response.json();
+                setError(data.error || 'An error occurred');
+            }
+        } catch (error) {
+            console.error('Error al obtener el inventario:', error);
+            throw error;
+        }
     };
 
     const filteredInventoryData = inventoryData
@@ -108,6 +131,7 @@ const useDashboard = (id_module: number) => {
             item.folio.toString().includes(searchTerm) ||
             item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.description.toLowerCase().includes(searchTerm.toLowerCase())
+
         )
         : [];
 

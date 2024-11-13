@@ -1,18 +1,20 @@
 'use client';
 
 type SubmitButtonProps = {
-    name: string,
+  name: string;
+  isActive?: boolean;
 };
-  
-  const SubmitButton: React.FC<SubmitButtonProps> = ({name }) => {
-    return (
-      <button
-        type="submit"
-        className="w-full bg-green-600 text-white p-2 rounded"
-        >
-        Guardar {name}
-      </button>
-    );
-  };
-  
-  export default SubmitButton;
+
+const SubmitButton: React.FC<SubmitButtonProps> = ({ name, isActive = true }) => {
+  return (
+    <button
+      type="submit"
+      className={`w-full text-white p-2 rounded ${isActive ? 'bg-green-600' : 'bg-green-600/75'}`}
+      disabled={!isActive}
+    >
+      Guardar {name}
+    </button>
+  );
+};
+
+export default SubmitButton;

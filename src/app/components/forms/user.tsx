@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useUserInsertForm from "@/app/hooks/useUserInsertForm";
 import MessageError from "@/app/components/message/error";
 import SubmitButton from "@/app/components/buttons/SubmitButton";
@@ -20,7 +20,7 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
     workerNumber,
     setWorkerNumber,
     password,
-    setPassword,
+    passwordConfirm,
     email,
     setEmail,
     idRole: selectedRole,
@@ -32,11 +32,18 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
     lendsPermission,
     setLendsPermission,
     error,
+    errorPass,
+    errorPassConfirm,
+    ValidatePassword,
+    ValidatePasswordConfirm,
     handleSubmit,
   } = useUserInsertForm(idModules);
 
   const { roles } = useRoles();
   const filteredRoles = roles?.filter(role => role.id >= roleID) || [];
+  const [isVisible, setIsVisible] = useState(false);
+  const [isPermissionConfirmed, setIsPermissionConfirmed] = useState(false);
+  const [isVisibleButton, setIsVisibleButton] = useState(false);
 
   useEffect(() => {
     if (typeof roleID === 'number' && !isNaN(roleID)) {
@@ -45,17 +52,29 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
       setIdRole(0); 
     }
   }, [roleID, setIdRole]);
-  
+
+  useEffect(() => {
+    selectedRole === 3 ? setIsVisibleButton(isPermissionConfirmed) : setIsVisibleButton(true); 
+    
+  }, [selectedRole, isPermissionConfirmed]);
+
+  const handleToggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
+  const handlePermissionCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setIsPermissionConfirmed(checked);
+  };
 
   return (
     <div className="flex justify-center">
-      {error && <MessageError error={error} />}
-      
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-7 w-1/3 rounded-md">
-        <input type="hidden" id="id_modules" name="id_modules" value={idModules} required />
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-7 w-1/3 rounded-md min-w-[450px]">
+        {error && <MessageError error={error} />}
+
+        <input type="hidden" id="id_modules" name="id_modules" value={idModules.toString()} required />
         <input type="hidden" id="status" name="status" value={1} required />
 
-        {/* Campos de entrada */}
         <BaseInput
           id="name"
           name="name"
@@ -89,15 +108,49 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
         <BaseInput
           id="password"
           name="password"
-          type="password"
+          type={isVisible ? "text" : "password"}
           placeholder="Contraseña"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => ValidatePassword(e.target.value)}
           required
         />
+        <label htmlFor="">
+          {errorPass.map((item, index) => (
+            <div key={index} className={item.color}>
+              {item.message}
+            </div>
+          ))}
+        </label>
 
-        {/* Selector de roles */}
-        <div className="mb-4">
+        <BaseInput
+          id="passwordConfirm"
+          name="passwordConfirm"
+          type={isVisible ? "text" : "password"}
+          placeholder="Confirmar contraseña"
+          value={passwordConfirm}
+          onChange={(e) => ValidatePasswordConfirm(e.target.value)}
+          required
+        />
+        <label htmlFor="">
+          {errorPassConfirm.map((item, index) => (
+            <div key={index} className={item.color}>
+              {item.message}
+            </div>
+          ))}
+        </label>
+
+        <div className="flex justify-end">
+          <label htmlFor="isVisible" className="mr-2">Mostrar contraseña</label>
+          <input 
+            type="checkbox"
+            name="isVisible"
+            id="isVisible"
+            checked={isVisible}
+            onChange={handleToggleVisibility}
+          />
+        </div>
+
+        <div>
           <label htmlFor="role" className="block text-sm font-medium text-gray-700">Seleccionar rol</label>
           <select
             id="role"
@@ -114,7 +167,6 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
           </select>
         </div>
 
-        {/* Mostrar permisos solo si el rol es igual a 3 */}
         {selectedRole === 3 && (
           <>
             <BaseSwitch
@@ -123,6 +175,7 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
               checked={deletePermission === 1}
               onChange={(e) => setDeletePermission(e.target.checked ? 1 : 0)}
               label="Eliminar productos"
+              infoText="El practicante podrá eliminar cualquier artículo que esté registrado."
             />
 
             <BaseSwitch
@@ -131,6 +184,7 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
               checked={editPermission === 1}
               onChange={(e) => setEditPermission(e.target.checked ? 1 : 0)}
               label="Modificar productos"
+              infoText="El practicante podrá editar cualquiera de los artículos que estén registrados."
             />
 
             <BaseSwitch
@@ -139,11 +193,25 @@ const UserForm: React.FC<UserFormProps> = ({ idModules, roleID }) => {
               checked={lendsPermission === 1}
               onChange={(e) => setLendsPermission(e.target.checked ? 1 : 0)}
               label="Gestionar préstamos"
+              infoText="El practicante podrá acceder a la aplicación móvil y realizar préstamos a los alumnos."
             />
+
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="confirmPermissions"
+                checked={isPermissionConfirmed}
+                onChange={handlePermissionCheckboxChange}
+                className="mr-2"
+              />
+              <label htmlFor="confirmPermissions" className="text-sm">
+                Confirmo que entiendo los permisos que estoy dando al practicante.
+              </label>
+            </div>
           </>
         )}
 
-        <SubmitButton name="usuario" />
+        <SubmitButton name="usuario" isActive={isVisibleButton} />
       </form>
     </div>
   );
