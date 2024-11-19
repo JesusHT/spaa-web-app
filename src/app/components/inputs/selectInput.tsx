@@ -29,10 +29,6 @@ const InputSelect: React.FC<InputSelectProps> = ({
     selectLabel
 }) => {
 
-    {options && options.map((option) => (
-        console.log(option.id)
-    ))}
-
     return (
         <div className="mb-4">
             <label htmlFor={name} className="block text-black">{selectLabel}</label>
