@@ -66,7 +66,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({ inventoryData, onView, 
 
       <Modal
         id_item={selectedItem ?? 0}
-        type="inventory item"
+        type="articulo"
         onConfirm={handleConfirmDelete}
         isOpen={isModalOpen}
         onClose={closeModal}

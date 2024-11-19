@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Profile } from '@/app/models/ProfileModel';
 
 const useUsers = (id_module: number, id_role: number, id_users: number) => {
+    const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [usersData, setUsersData] = useState<Profile[]>([]);
@@ -55,12 +57,8 @@ const useUsers = (id_module: number, id_role: number, id_users: number) => {
         }
     };
 
-    const handleView = (id: number) => {
-        alert(`Ver detalles del usuario ${id}`);
-    };
-
     const handleEdit = (id: number) => {
-        alert(`Editar usuario ${id}`);
+        router.push(`/usuarios/editar/${id}`);
     };
 
     const handleDelete = (id: number) => {
@@ -83,7 +81,6 @@ const useUsers = (id_module: number, id_role: number, id_users: number) => {
         loading,
         error,
         paginatedUsersData,
-        handleView,
         handleEdit,
         handleDelete,
         handlePageChange,

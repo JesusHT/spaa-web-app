@@ -4,22 +4,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const useInventoryInsertForm = (id_module: number) => {
-    const [name, setName] = useState<string>('');
-    const [idBrand, setIdBrand] = useState<string>('');
-    const [idModel, setIdModel] = useState<string>('');
-    const [quantity, setQuantity] = useState<number>(0);
-    const [folio, setFolio] = useState<number>(0);
-    const [description, setDescription] = useState<string>('');
-    const [serie, setSerie] = useState<string>('');
-    const [notLocated, setNotLocated] = useState<number>(0);
+    const [name, setName]                       = useState<string>('');
+    const [folio, setFolio]                     = useState<number>(0);
+    const [serie, setSerie]                     = useState<string>('');
+    const [status, setStatus]                   = useState<number>(1); 
+    const [idModel, setIdModel]                 = useState<string>('');
+    const [idBrand, setIdBrand]                 = useState<string>('');
+    const [quantity, setQuantity]               = useState<number>(0);
+    const [imageUrl, setImageUrl]               = useState<string>('');
+    const [brandName, setBrandName]             = useState<string>(''); 
+    const [modelName, setModelName]             = useState<string>(''); 
+    const [notLocated, setNotLocated]           = useState<number>(0);
+    const [description, setDescription]         = useState<string>('');
+    const [showBrandField, setShowBrandField]   = useState<boolean>(false); 
+    const [showModelField, setShowModelField]   = useState<boolean>(false); 
     const [secondCustodian, setSecondCustodian] = useState<number>(0);
-    const [imageUrl, setImageUrl] = useState<string>('');
-    const [status, setStatus] = useState<number>(1); 
-    const [brandName, setBrandName] = useState<string>(''); 
-    const [modelName, setModelName] = useState<string>(''); 
-    const [showBrandField, setShowBrandField] = useState<boolean>(false); 
-    const [showModelField, setShowModelField] = useState<boolean>(false); 
-    const [error, setError] = useState<string>('');
+    const [error, setError]                     = useState<string>('');
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

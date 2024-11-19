@@ -32,6 +32,10 @@ body {
   background-color: #E2F6CA;
 }
 
+.bg-primary {
+  background-color: #0C4631;
+}
+
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;

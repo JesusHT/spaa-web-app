@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useAuthentication } from '@/app/hooks/useAuthentication';
 import useUsers from '@/app/hooks/useUsers';
 
 import EmptyState from '@/app/components/emptyState/table';
@@ -18,7 +17,6 @@ import { useProfile } from '@/app/context/profileContext';
 
 const Users = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const isAuthenticated = useAuthentication();
   const { profile } = useProfile();
   const id_modules = profile?.user.id_modules || 0;
   const id_role = profile?.auth.id_role || 0;
@@ -29,7 +27,6 @@ const Users = () => {
     loading, 
     error,
     paginatedUsersData,
-    handleView,
     handleEdit,
     handleDelete,
     handlePageChange,
@@ -89,7 +86,6 @@ const Users = () => {
             <>
               <UsersTable
                 usersData={paginatedUsersData}
-                onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
               />
