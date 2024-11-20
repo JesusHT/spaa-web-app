@@ -10,5 +10,6 @@ export const API_ROUTES = {
     INVENTORY_DETAILS: `${URL_MAIN}/api/inventario/details/`,
     MODELS: `${URL_MAIN}/api/modelos/`,
     MODULES: `${URL_MAIN}/api/laboratorios/`,
-    ROLES: `${URL_MAIN}/api/roles/`
+    ROLES: `${URL_MAIN}/api/roles/`,
+    BORROW: `${URL_MAIN}/api/prestamos/`
 };
