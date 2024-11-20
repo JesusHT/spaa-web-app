@@ -27,10 +27,10 @@ const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose
     >
         <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-primary rounded-lg shadow">
-                <div className="p-4 md:p-5 text-center">
-                    <i className="fa-regular fa-circle-exclamation text-5xl mb-4 text-white"></i>
+                <div className="p-4 md:p-5 text-center bg-white rounded-xl shadow-md shadow-yellow-500">
+                    <i className="fa-regular fa-circle-exclamation text-5xl mb-4 text-red-500"></i>
 
-                    <h3 className="mb-5 text-lg font-normal text-white">
+                    <h3 className="mb-5 text-lg font-normal text-black">
                         ¿Estás seguro de que deseas eliminar el {type} {worker_number ? `con el número de cuenta ${worker_number}` : `con el folio ${folio}`}?
                     </h3>
                     <button
@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose
                     <button
                         onClick={onClose}
                         type="button"
-                        className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                         >
                         No, cancela.
                     </button>
