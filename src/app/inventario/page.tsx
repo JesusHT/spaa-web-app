@@ -3,14 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProfile } from '@/app/context/profileContext';
-
+import Button from '../components/buttons/Button';
 import EmptyState from '@/app/components/emptyState/table';
 import useInventory from '@/app/hooks/useInventory';
 
 import InventoryTable from '@/app/components/tables/Inventory';
 import AddButton from '@/app/components/buttons/AddButton';
-import RightArrowButton from '@/app/components/buttons/RightArrowButton';
-import LeftArrowButton from '@/app/components/buttons/LeftArrowButton';
 import SearchForm from '@/app/components/inputs/search';
 import SkeletonTable from '@/app/components/skeletons/skeletonTable'; 
 
@@ -97,24 +95,36 @@ const Inventory = () => {
             />
           ) : (
             <>
-              <InventoryTable
-                inventoryData={paginatedInventoryData}
-                onView={handleView}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
+                <InventoryTable
+                    inventoryData={paginatedInventoryData}
+                    onView={handleView}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                />
 
-              {totalPages > 1 && (
-                <div className="flex justify-between mt-4">
-                  {currentPage > 1 && (
-                    <LeftArrowButton onClick={() => handlePageChange('prev')} />
-                  )}
-                  <span>Página {currentPage} de {totalPages}</span>
-                  {currentPage < totalPages && (
-                    <RightArrowButton onClick={() => handlePageChange('next')} />
-                  )}
-                </div>
-              )}
+                {totalPages > 1 && (
+                    <div className="flex justify-between mt-4">
+                        {currentPage > 1 && (
+                            <Button 
+                                onClick={() => handlePageChange('prev')}
+                                textColor='white'
+                                bgColor='bg-yellow-500'
+                                bgColorHover='bg-yellow-800'
+                                icon='fa-arrow-left'
+                            />                    
+                        )}
+                        <span>Página {currentPage} de {totalPages}</span>
+                        {currentPage < totalPages && (
+                            <Button 
+                                onClick={() => handlePageChange('next')}
+                                textColor='white'
+                                bgColor='bg-yellow-500'
+                                bgColorHover='bg-yellow-800'
+                                icon='fa-arrow-right'
+                            />  
+                        )}
+                    </div>
+                )}
             </>
           )}
         </>
