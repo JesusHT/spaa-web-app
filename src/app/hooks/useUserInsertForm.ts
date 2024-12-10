@@ -11,9 +11,9 @@ const useUserInsertForm = (id_modules: number) => {
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [status, setStatus] = useState<number>(1);
-    const [deletePermission, setDeletePermission] = useState<number | null>(idRole === 3 ? null : 0);
-    const [editPermission, setEditPermission] = useState<number | null>(idRole === 3 ? null : 0);
-    const [lendsPermission, setLendsPermission] = useState<number | null>(idRole === 3 ? null : 0);
+    const [deletePermission, setDeletePermission] = useState<number | null>(idRole === 3 ? 0 : 0);
+    const [editPermission, setEditPermission] = useState<number | null>(idRole === 3 ? 0 : 0);
+    const [lendsPermission, setLendsPermission] = useState<number | null>(idRole === 3 ? 0 : 0);
     const [error, setError] = useState<string>('');
     const [errorPass, setErrorPass] = useState<{ message: string; color: string }[]>([]);
     const [errorPassConfirm, setErrorPassConfirm] = useState<{ message: string; color: string }[]>([]);
@@ -69,9 +69,9 @@ const useUserInsertForm = (id_modules: number) => {
             password,
             email,
             status,
-            delete: deletePermission,
-            edit: editPermission,
-            lends: lendsPermission,
+            deleteP: `${deletePermission}`,
+            edit: `${editPermission}`,
+            lends: `${lendsPermission}`,
         };
 
         try {
