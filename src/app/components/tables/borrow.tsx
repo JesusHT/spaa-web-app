@@ -64,14 +64,6 @@ const HistoryTable: React.FC<HistoryTableProps> = ({ borrowData, onView, onEdit}
                     text='Ver'
                 />
                 <Button 
-                    onClick={() => onEdit(item.id_borrow)}
-                    textColor='white'
-                    bgColor='bg-yellow-400'
-                    bgColorHover='bg-yellow-500'
-                    icon='fa-pen-to-square'
-                    text='Editar'
-                />
-                <Button 
                     onClick={() => handleDeleteClick(item.id_borrow, item.num_account.toString())}
                     textColor='white'
                     bgColor='bg-red-700'

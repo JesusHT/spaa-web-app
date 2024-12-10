@@ -8,9 +8,10 @@ type ModalProps = {
   onClose: () => void;
   worker_number?: number;
   folio?: number;
+  customText?: string;
 };
 
-const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose, worker_number, folio }) => {
+const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose, worker_number, folio, customText = ''}) => {
   if (!isOpen) return null;
 
   const handleConfirm = () => {
@@ -31,7 +32,13 @@ const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose
                     <i className="fa-regular fa-circle-exclamation text-5xl mb-4 text-red-500"></i>
 
                     <h3 className="mb-5 text-lg font-normal text-black">
-                        ¿Estás seguro de que deseas eliminar el {type} {worker_number ? `con el número de cuenta ${worker_number}` : `con el folio ${folio}`}?
+                    {customText === '' ? (
+                        <>¿Estás seguro de que deseas eliminar el {type} {worker_number ? `con el número de cuenta ${worker_number}` : `con el folio ${folio}`}?</>
+                    ) : (
+                        customText
+                    )}
+
+                       
                     </h3>
                     <button
                         onClick={handleConfirm}
@@ -43,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({ id_item, type, onConfirm, isOpen, onClose
                     <button
                         onClick={onClose}
                         type="button"
-                        className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                        className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                         >
                         No, cancela.
                     </button>

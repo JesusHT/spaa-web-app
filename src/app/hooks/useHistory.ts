@@ -74,11 +74,11 @@ const useHistory = (id_module: number) => {
     };
 
     const handleView = async (id: number) => {
-        router.push(`/prestamos/ver/${id}`);
+        router.push(`/historial/ver/${id}`);
     };
 
     const handleEdit = async (id: number) => {
-        router.push(`/prestamos/editar/${id}`);
+        router.push(`/historial/editar/${id}`);
     };
 
     const handleDelete = async (id: number) => {

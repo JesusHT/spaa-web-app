@@ -76,6 +76,14 @@ const Inventory = () => {
           <h1 className="text-2xl font-bold mb-3">Inventario</h1>
 
           <div className="flex items-center space-x-4 justify-end">
+            <Button
+              onClick={() => handlePageChange('prev')}
+              textColor='white'
+              bgColor='bg-amber-500'
+              bgColorHover='bg-amber-700'
+              text='Agregar csv'
+              icon='fa-file-csv'
+            />
             <SearchForm
               placeholderText="Buscar por folio, nombre o descripción..."
               searchTerm={searchTerm}

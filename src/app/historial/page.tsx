@@ -54,7 +54,7 @@ const History = () => {
       )}
 
       <>
-        <h1 className="text-2xl font-bold mb-3">Historial</h1>
+        <h1 className="text-2xl font-bold mb-3">Historial de Prestamos</h1>
 
         <div className="flex items-center space-x-4 justify-end">
           <SearchForm
